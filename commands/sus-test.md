@@ -491,6 +491,7 @@ class FeatureJourneyTest < ApplicationSystemTestCase
   teardown do
     if passed?
       puts "\n📸 스크린샷 저장 완료: #{SCREENSHOT_DIR}"
+      system("open", SCREENSHOT_DIR.to_s)  # Finder에서 자동 열기
     end
   end
 
@@ -552,8 +553,20 @@ scenarios:
 2. 오류 발생 시 분석 → 코드 수정
 3. 재실행
 4. 성공 시 스크린샷 캡쳐
+5. **Finder에서 스크린샷 폴더 자동 열기**
 
-### 8.5 오류 자동 수정 패턴
+### 8.5 완료 후 자동 열기
+```ruby
+# 테스트 완료 후 Finder에서 스크린샷 폴더 열기
+system("open", SCREENSHOT_DIR.to_s) if passed?
+```
+
+```bash
+# 또는 Bash에서
+open screenshots/{journey_name}/
+```
+
+### 8.6 오류 자동 수정 패턴
 | 오류 유형 | 자동 수정 방법 |
 |-----------|----------------|
 | `ElementNotFound` | data-testid 추가 |
